@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- http://hadoop.apache.org/docs/r3.1.2/hadoop-project-dist/hadoop-common/ClusterSetup.html -->
+<configuration>
+
+    <!-- Single hostname that can be set in place of setting all
+    yarn.resourcemanager*address resources. Results in default ports
+    for ResourceManager components: scheduler - 8030, resource-tracker - 8031,
+    resourcemanager - 8032, admin - 8033, webapp - 8088. -->
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>resourcemanager</value>
+    </property>
+
+    <!-- Shuffle service that needs to be set for Map Reduce applications. -->
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+        <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+    </property>
+
+    <!-- Required for Hive on Spark
+    https://cwiki.apache.org/confluence/display/Hive/Hive+on+Spark%3A+Getting+Started -->
+    <property>
+        <name>yarn.resourcemanager.scheduler.class</name>
+        <!-- Note: do not reformat, any new lines between <value></value>
+        tags will cause NoClassDefFound for FairScheduler-->
+        <value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler</value>
+    </property>
+
+    <property>
+        <description>To enable RM web ui2 application.</description>
+        <name>yarn.webapp.ui2.enable</name>
+        <value>true</value>
+    </property>
+
+    <property>
+        <name>yarn.application.classpath</name>
+        <value>/etc/hadoop:/opt/hadoop/share/hadoop/common/lib/*:/opt/hadoop/share/hadoop/common/*:/opt/hadoop/share/hadoop/hdfs:/opt/hadoop/share/hadoop/hdfs/lib/*:/opt/hadoop/share/hadoop/hdfs/*:/opt/hadoop/share/hadoop/mapreduce/lib/*:/opt/hadoop/share/hadoop/mapreduce/*:/opt/hadoop/share/hadoop/yarn:/opt/hadoop/share/hadoop/yarn/lib/*:/opt/hadoop/share/hadoop/yarn/*:/usr/local/openjdk-8/lib/tools.jar:/opt/hadoop/share/hadoop/tools/lib/aliyun-java-sdk-core-3.4.0.jar:/opt/hadoop/share/hadoop/tools/lib/aliyun-java-sdk-ecs-4.2.0.jar:/opt/hadoop/share/hadoop/tools/lib/aliyun-java-sdk-ram-3.0.0.jar:/opt/hadoop/share/hadoop/tools/lib/aliyun-java-sdk-sts-3.0.0.jar:/opt/hadoop/share/hadoop/tools/lib/aliyun-sdk-oss-3.4.1.jar:/opt/hadoop/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.375.jar:/opt/hadoop/share/hadoop/tools/lib/azure-data-lake-store-sdk-2.2.9.jar:/opt/hadoop/share/hadoop/tools/lib/azure-keyvault-core-1.0.0.jar:/opt/hadoop/share/hadoop/tools/lib/azure-storage-7.0.0.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-aliyun-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-archive-logs-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-archives-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-aws-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-azure-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-azure-datalake-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-datajoin-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-distcp-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-extras-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-fs2img-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-gridmix-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-kafka-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-openstack-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-resourceestimator-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-rumen-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-sls-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/jdom-1.1.jar:/opt/hadoop/share/hadoop/tools/lib/kafka-clients-0.8.2.1.jar:/opt/hadoop/share/hadoop/tools/lib/lz4-1.2.0.jar:/opt/hadoop/share/hadoop/tools/lib/ojalgo-43.0.jar:/opt/hadoop/share/hadoop/tools/lib/wildfly-openssl-1.0.7.Final.jar</value>
+    </property>
+
+    <property>
+        <name>yarn.timeline-service.address</name>
+        <value>historyserver:10200</value>
+    </property>
+
+    <property>
+        <name>yarn.timeline-service.reader.webapp.address</name>
+        <value>historyserver</value>
+    </property>
+
+    <property>
+        <name>yarn.timeline-service.hostname</name>
+        <value>historyserver</value>
+    </property>
+
+    <property>
+        <name>yarn.timeline-service.enabled</name>
+        <value>true</value>
+    </property>
+
+    <property>
+        <name>yarn.timeline-service.webapp.address</name>
+        <value>historyserver:8188</value>
+    </property>
+</configuration>

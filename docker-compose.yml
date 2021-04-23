@@ -1,0 +1,63 @@
+version: "3.8"
+
+services:
+  resourcemanager:
+    container_name: resourcemanager
+    hostname: resourcemanager
+    image: hadoop-base:3.2.1
+    environment:
+      YARN_RESOURCEMANAGER_USER: root
+    ports:
+      - 8088:8088 # yarn
+    entrypoint: "/bin/bash"
+    command:
+      - yarn
+      - resourcemanager
+    volumes:
+      - ./conf/hadoop:/etc/hadoop
+
+  historyserver:
+    container_name: historyserver
+    hostname: historyserver
+    image: hadoop-base:3.2.1
+    ports:
+      - 8188:8188 # history
+    entrypoint: "/bin/bash"
+    command:
+      - yarn
+      - historyserver
+    volumes:
+      - ./conf/hadoop:/etc/hadoop
+
+  namenode:
+    container_name: namenode
+    hostname: namenode
+    image: hadoop-hdfs:3.2.1
+    environment:
+      NODE_TYPE: namenode
+      HDFS_NAMENODE_USER: root
+      CLUSTER_NAME: hadoop-cluster
+    volumes:
+      - namenode:/hadoop/dfs/namenode
+      - ./conf/hadoop:/etc/hadoop
+    ports:
+      - 50070:50070 # hdfs
+      - 8042:8042 # node manager
+
+  datanode:
+    container_name: datanode
+    hostname: datanode
+    image: hadoop-hdfs:3.2.1
+    environment:
+      NODE_TYPE: datanode
+      HDFS_DATANODE_USER: root
+    volumes:
+      - datanode:/hadoop/dfs/datanode
+      - ./conf/hadoop:/etc/hadoop
+    ports:
+      - 50075:50075 # hdfs
+      - 8043:8042 # node manager
+
+volumes:
+  namenode:
+  datanode:
