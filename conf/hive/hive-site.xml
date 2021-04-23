@@ -31,7 +31,7 @@
     </property>
     <property>
         <name>javax.jdo.option.ConnectionURL</name>
-        <value>jdbc:postgresql://postgres/metastore</value>
+        <value>jdbc:postgresql://hive-postgres/metastore</value>
     </property>
     <property>
         <name>javax.jdo.option.ConnectionDriverName</name>
@@ -51,7 +51,7 @@
     </property>
     <property>
         <name>hive.server2.webui.host</name>
-        <value>0.0.0.0</value>
+        <value>hive-server</value>
     </property>
     <property>
         <name>hive.server2.webui.port</name>
@@ -63,6 +63,10 @@
     </property>
     <property>
         <name>hive.execution.engine</name>
-        <value>mr</value>
+        <value>yarn</value>
+    </property>
+    <property>
+        <name>hive.log.explain.output</name>
+        <value>true</value>
     </property>
 </configuration>

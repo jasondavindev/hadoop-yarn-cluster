@@ -43,6 +43,9 @@ services:
     ports:
       - 50070:50070 # hdfs
       - 8042:8042 # node manager
+    depends_on:
+      - resourcemanager
+      - historyserver
 
   datanode:
     container_name: datanode
@@ -57,7 +60,52 @@ services:
     ports:
       - 50075:50075 # hdfs
       - 8043:8042 # node manager
+    depends_on:
+      - namenode
 
+  hive-postgres:
+    image: postgres:9.4
+    container_name: hive-postgres
+    hostname: hive-postgres
+    ports:
+      - 5433:5432
+    volumes:
+      - ./tmp/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: hive
+      POSTGRES_USER: hive
+      POSTGRES_DB: metastore
+
+  hive-metastore:
+    hostname: hive-metastore
+    image: hadoop-hive:3.1.2
+    container_name: hive-metastore
+    depends_on:
+      - hive-postgres
+      - datanode
+    volumes:
+      - ./conf/hadoop:/etc/hadoop
+      - ./conf/hive/hive-site.xml:/opt/hive/conf/hive-site.xml
+    command: "hive --service metastore"
+    ports:
+      - 9083:9083
+
+  hive-server:
+    hostname: hive-server
+    image: hadoop-hive:3.1.2
+    container_name: hive-server
+    depends_on:
+      - hive-metastore
+    volumes:
+      - ./conf/hadoop:/etc/hadoop
+      - ./conf/hive:/opt/hive/conf
+    command: "hiveserver2"
+    ports:
+      - 10002:10002
 volumes:
   namenode:
   datanode:
+
+networks:
+  default:
+    name: hadoop-cluster-network
