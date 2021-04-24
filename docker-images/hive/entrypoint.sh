@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ ! test -f populated ]; then
+if [ ! -f populated ]; then
     schematool -dbType postgres -initSchema
     touch populated
 fi
