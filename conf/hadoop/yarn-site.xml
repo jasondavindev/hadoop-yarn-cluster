@@ -3,17 +3,11 @@
 
 <!-- http://hadoop.apache.org/docs/r3.1.2/hadoop-project-dist/hadoop-common/ClusterSetup.html -->
 <configuration>
-
-    <!-- Single hostname that can be set in place of setting all
-    yarn.resourcemanager*address resources. Results in default ports
-    for ResourceManager components: scheduler - 8030, resource-tracker - 8031,
-    resourcemanager - 8032, admin - 8033, webapp - 8088. -->
     <property>
         <name>yarn.resourcemanager.hostname</name>
         <value>resourcemanager</value>
     </property>
 
-    <!-- Shuffle service that needs to be set for Map Reduce applications. -->
     <property>
         <name>yarn.nodemanager.aux-services</name>
         <value>mapreduce_shuffle</value>
@@ -23,12 +17,8 @@
         <value>org.apache.hadoop.mapred.ShuffleHandler</value>
     </property>
 
-    <!-- Required for Hive on Spark
-    https://cwiki.apache.org/confluence/display/Hive/Hive+on+Spark%3A+Getting+Started -->
     <property>
         <name>yarn.resourcemanager.scheduler.class</name>
-        <!-- Note: do not reformat, any new lines between <value></value>
-        tags will cause NoClassDefFound for FairScheduler-->
         <value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler</value>
     </property>
 
@@ -66,5 +56,10 @@
     <property>
         <name>yarn.timeline-service.webapp.address</name>
         <value>historyserver:8188</value>
+    </property>
+
+    <property>
+        <name>yarn.log-aggregation-enable</name>
+        <value>true</value>
     </property>
 </configuration>

@@ -11,9 +11,4 @@
         <name>mapreduce.jobhistory.address</name>
         <value>historyserver:10020</value>
     </property>
-
-    <!-- <property>
-        <name>mapreduce.jobhistory.admin.address</name>
-        <value>historyserver:10033</value>
-    </property> -->
 </configuration>
