@@ -100,9 +100,13 @@ services:
     volumes:
       - ./conf/hadoop:/etc/hadoop
       - ./conf/hive:/opt/hive/conf
-    command: "hiveserver2"
+    entrypoint: ""
+    command: "hiveserver2 --hiveconf hive.root.logger=INFO,DRFA,Console,WARNING,ERROR"
     ports:
       - 10002:10002
+    environment:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
 volumes:
   namenode:
   datanode:
