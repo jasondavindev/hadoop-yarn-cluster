@@ -92,10 +92,11 @@ services:
 
   hive-server:
     hostname: hive-server
-    image: hadoop-hive:3.1.2
+    # image: hadoop-hive:3.1.2
+    image: hadoop-hive-glue:2.3.6
     container_name: hive-server
-    depends_on:
-      - hive-metastore
+    # depends_on:
+    #   - hive-metastore
     volumes:
       - ./conf/hadoop:/etc/hadoop
       - ./conf/hive:/opt/hive/conf

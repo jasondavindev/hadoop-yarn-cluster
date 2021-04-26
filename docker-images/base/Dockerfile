@@ -1,5 +1,7 @@
 FROM openjdk:8
 
+ARG HADOOP_VERSION
+
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     net-tools \
     curl \
@@ -9,7 +11,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-ENV HADOOP_VERSION 3.2.1
+ENV HADOOP_VERSION ${HADOOP_VERSION}
 ENV HADOOP_URL https://www.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 
 RUN set -x \

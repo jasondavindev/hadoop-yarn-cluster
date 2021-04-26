@@ -21,7 +21,7 @@
         <name>hive.metastore.warehouse.dir</name>
         <value>/user/hive/warehouse</value>
     </property>
-    <property>
+    <!-- <property>
         <name>hive.metastore.uris</name>
         <value>thrift://hive-metastore:9083</value>
     </property>
@@ -44,7 +44,7 @@
     <property>
         <name>javax.jdo.option.ConnectionUserName</name>
         <value>hive</value>
-    </property>
+    </property> -->
     <property>
         <name>hive.server2.enable.doAs</name>
         <value>false</value>
@@ -68,5 +68,32 @@
     <property>
         <name>hive.log.explain.output</name>
         <value>true</value>
+    </property>
+
+    <property>
+        <name>hive.imetastoreclient.factory.class</name>
+        <value>com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory</value>
+    </property>
+    <property>
+        <name>hive.metastore.schema.verification</name>
+        <value>false</value>
+    </property>
+
+    <!-- AWS configs -->
+    <property>
+        <name>aws.region</name>
+        <value>us-east-1</value>
+    </property>
+    <property>
+        <name>fs.s3.awsAccessKeyId</name>
+        <value></value>
+    </property>
+    <property>
+        <name>fs.s3.awsSecretAccessKey</name>
+        <value></value>
+    </property>
+    <property>
+        <name>hive.conf.hidden.list</name>
+        <value>javax.jdo.option.ConnectionPassword,hive.server2.keystore.password</value>
     </property>
 </configuration>
