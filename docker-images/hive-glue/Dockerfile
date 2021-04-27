@@ -15,7 +15,7 @@ RUN wget https://issues.apache.org/jira/secure/attachment/12958418/HIVE-12679.br
 RUN mvn clean install -DskipTests -Pdist
 
 RUN mkdir -p /opt/hive; \
-    mv /hive/packaging/target/apache-hive-2.3.6-SNAPSHOT-bin/apache-hive-2.3.6-SNAPSHOT-bin/* /opt/hive
+    mv /hive/packaging/target/apache-hive-${HIVE_VERSION}-SNAPSHOT-bin/apache-hive-${HIVE_VERSION}-SNAPSHOT-bin/* /opt/hive
 
 RUN git clone https://github.com/awslabs/aws-glue-data-catalog-client-for-apache-hive-metastore.git /opt/aws-glue-datacatalog; \
     cd /opt/aws-glue-datacatalog; \

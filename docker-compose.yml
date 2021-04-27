@@ -16,16 +16,16 @@ services:
     volumes:
       - ./conf/hadoop:/etc/hadoop
 
-  historyserver:
-    container_name: historyserver
-    hostname: historyserver
+  timelineserver:
+    container_name: timelineserver
+    hostname: timelineserver
     image: hadoop-base:3.2.1
     ports:
-      - 8188:8188 # history
+      - 8188:8188 # timeline
     entrypoint: "/bin/bash"
     command:
       - yarn
-      - historyserver
+      - timelineserver
     volumes:
       - ./conf/hadoop:/etc/hadoop
 
@@ -45,7 +45,6 @@ services:
       - 8042:8042 # node manager
     depends_on:
       - resourcemanager
-      - historyserver
 
   datanode:
     container_name: datanode
@@ -60,6 +59,22 @@ services:
     ports:
       - 50075:50075 # hdfs
       - 8043:8042 # node manager
+    depends_on:
+      - namenode
+
+  datanode2:
+    container_name: datanode2
+    hostname: datanode2
+    image: hadoop-hdfs:3.2.1
+    environment:
+      NODE_TYPE: datanode
+      HDFS_DATANODE_USER: root
+    volumes:
+      - datanode2:/hadoop/dfs/datanode
+      - ./conf/hadoop:/etc/hadoop
+    ports:
+      - 50175:50075 # hdfs
+      - 8142:8042 # node manager
     depends_on:
       - namenode
 
@@ -95,21 +110,21 @@ services:
     # image: hadoop-hive:3.1.2
     image: hadoop-hive-glue:2.3.6
     container_name: hive-server
-    # depends_on:
-    #   - hive-metastore
     volumes:
       - ./conf/hadoop:/etc/hadoop
       - ./conf/hive:/opt/hive/conf
-    entrypoint: ""
-    command: "hiveserver2 --hiveconf hive.root.logger=INFO,DRFA,Console,WARNING,ERROR"
+    command: "hiveserver2 --hiveconf hive.root.logger=INFO,WARN"
     ports:
       - 10002:10002
-    environment:
-      AWS_ACCESS_KEY_ID:
-      AWS_SECRET_ACCESS_KEY:
+      - 8044:8042
+    env_file: .env
+    depends_on:
+      - datanode
+
 volumes:
   namenode:
   datanode:
+  datanode2:
 
 networks:
   default:

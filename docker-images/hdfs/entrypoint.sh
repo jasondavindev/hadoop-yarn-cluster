@@ -13,10 +13,10 @@ if [ "$NODE_TYPE" == "namenode" ]; then
         $HADOOP_HOME/bin/hdfs --config $HADOOP_CONF_DIR namenode -format $CLUSTER_NAME
     fi
 
-    $HADOOP_HOME/bin/hdfs --config $HADOOP_CONF_DIR namenode &
+    $HADOOP_HOME/bin/hdfs --loglevel INFO,WARN,ERROR,Console --config $HADOOP_CONF_DIR namenode &
 
 elif [ "$NODE_TYPE" == "datanode" ]; then
-    $HADOOP_HOME/bin/hdfs --config $HADOOP_CONF_DIR datanode &
+    $HADOOP_HOME/bin/hdfs --loglevel INFO,WARN,ERROR,Console --config $HADOOP_CONF_DIR datanode &
 else
     echo "Invalid node type"
     exit 1

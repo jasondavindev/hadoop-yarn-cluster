@@ -9,6 +9,6 @@
 
     <property>
         <name>mapreduce.jobhistory.address</name>
-        <value>historyserver:10020</value>
+        <value>timelineserver:10020</value>
     </property>
 </configuration>
